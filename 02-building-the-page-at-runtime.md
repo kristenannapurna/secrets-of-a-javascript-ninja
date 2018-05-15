@@ -155,7 +155,7 @@ document.body.addEventListener();
 
 2.  <a title="You can register multiple function handlers to the same event if you use the addEventListener method.">What is the main advantage of using the `addEventListener` method to register an event handler versus assigning a handler to a specific element property?</a>
 
-3.  <a title="Only one event can be processed at a time.">How many events can be processed at once?<a>
+3.  <a href="#" title="Only one event can be processed at a time.">How many events can be processed at once?<a>
 
 4.  <a title = "The events are processed in the order that the broswer detects them.">In waht order are events from the event queue processed? </a>
 
