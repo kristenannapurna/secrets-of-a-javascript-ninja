@@ -82,3 +82,83 @@ Let's jump back to `code/02/reacting-to-events/` to identify what is _function c
 As the browser reaches the `script` node in the page-building phase, it pauses DOM construction and executes the JavaScript code instead.
 
 In our code example, if we wanted to select the `ul#second` in the first set of script tags, it wouldn't work, because that element doesn't yet exist. (This is why script tags are normally put at the bottom of the page).
+
+Once it hits the end of the first script tag, it switches back to building the DOM nodes.
+
+During this process and for the whole lifecycle of the page, the global `window` object is accessible - so in the second script tag, we are able to access global functions and variables that were created earlier.
+
+Once there are no more HTML elements to process, page building is complete - and the browser moves on to event handling.
+
+### Event Handling
+
+#### Event Handling Overview
+
+The browser environment is what's called a _single threaded execution model_. Only one single piece of code can be executed at once.
+
+**The Event Queue**
+
+![](https://dpzbhybb2pdcj.cloudfront.net/maras/Figures/02fig08_alt.jpg)
+
+All events (whether user generated or server generated like ajax) are placed in this queue in the order they are detected.
+
+The event queue follows this protocol:
+
+1.  The browser checks what's at the front of the event queue.
+2.  If there are no events, it keeps checking.
+3.  If there is an event, the browser executes the associated handler, if one exists.
+
+_Important note: the mechanism that takes events and puts them **onto** the queue is separate from the thread that is handling events._
+
+#### Events are Asynchronous
+
+We can't predict when events will occur, and in what order. Events can include:
+
+* Browser events
+  * when a page finishes loading
+* User events
+  * mouse clicks
+  * mouse moves
+  * key presses
+* Network events
+  * Ajax resopnses
+* Timer events
+  * setTimeout
+  * setInterval
+
+The majority of our code is executed as the result of some event, so understanding this process is pretty important.
+
+#### Registering Event Handlers
+
+We have to let the browser know that we're interested in certain events. In client side applications, we can do this in two ways:
+
+1.  Assigning functions to special properties
+
+```javascript
+window.onload = function() {};
+
+document.body.onclick = function() {};
+```
+
+The drawback of the above is that it's only possible to register one function handler for a particular event.
+
+2.  Using the built in `addEventListener` method
+
+```javascript
+document.body.addEventListener("mousemove", function() {});
+
+document.body.addEventListener();
+```
+
+### Exercises (Hover to see my answer!)
+
+1.  <abbr title="Parsing HTML/Building the DOM and Executing JavaScript Code.">What are the two phases of the lifecycle of a client side web application?</abbr>
+
+2.  <abbr title="You can register multiple function handlers to the same event if you use the addEventListener method.">What is the main advantage of using the `addEventListener` method to register an event handler versus assigning a handler to a specific element property?</abbr>
+
+3.  <abbr title="Only one event can be processed at a time.">How many events can be processed at once?<abbr>
+
+4.  <abbr title = "The events are processed in the order that the broswer detects them.">In waht order are events from the event queue processed? </abbr>
+
+## Bonus Content
+
+<a href="https://www.youtube.com/watch?v=8aGhZQkoFbQ">What the heck is the event loop anyway?</a> - Philip Roberts, JSConf EU 2014 (27 min)
