@@ -10,6 +10,7 @@ Code examples and exercises that correspond with the chapters can be found in th
 <div>
 <a href="/02-building-the-page-at-runtime.md">Chapter 2: Building The Page At Runtime</a>
 </div>
+
 Chapter 3: First Class Functions
 
 Chapter 4: Understanding Function Invocation
