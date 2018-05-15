@@ -151,13 +151,13 @@ document.body.addEventListener();
 
 ### Exercises (Hover to see my answer!)
 
-1.  <abbr title="Parsing HTML/Building the DOM and Executing JavaScript Code.">What are the two phases of the lifecycle of a client side web application?</abbr>
+1.  <a title="Parsing HTML/Building the DOM and Executing JavaScript Code.">What are the two phases of the lifecycle of a client side web application?</a>
 
-2.  <abbr title="You can register multiple function handlers to the same event if you use the addEventListener method.">What is the main advantage of using the `addEventListener` method to register an event handler versus assigning a handler to a specific element property?</abbr>
+2.  <a title="You can register multiple function handlers to the same event if you use the addEventListener method.">What is the main advantage of using the `addEventListener` method to register an event handler versus assigning a handler to a specific element property?</a>
 
-3.  <abbr title="Only one event can be processed at a time.">How many events can be processed at once?<abbr>
+3.  <a title="Only one event can be processed at a time.">How many events can be processed at once?<a>
 
-4.  <abbr title = "The events are processed in the order that the broswer detects them.">In waht order are events from the event queue processed? </abbr>
+4.  <a title = "The events are processed in the order that the broswer detects them.">In waht order are events from the event queue processed? </a>
 
 ## Bonus Content
 
