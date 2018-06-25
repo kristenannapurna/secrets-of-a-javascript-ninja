@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Memoizing</title>
+</head>
+
+<body>
+
+  <script>
+
+    function assert(condition, message) {
+      condition ? console.log(message) : `Assertion failed.`
+    }
+
+    // A prime number is a whole number greater than 1 whose only factors are 1 and itself. A factor is a whole number that can be divided evenly into another number. 
+
+    function isPrime(value) {
+      // creates the cache the first time the function is called as a property on the function object
+      if (!isPrime.answers) {
+        isPrime.answers = {};
+      }
+
+      // checks if the answer already exists in the cache, and if so returns that
+      if (isPrime.answers[value] !== undefined) {
+        return isPrime.answers[value];
+      }
+
+      // 1 is not a prime number so return false if it is, otherwise set prime to true
+      var prime = value !== 1;
+
+      // check for prime, starting at 2
+      for (var i = 2; i < value; i++) {
+        if (value % i === 0) {
+          prime = false;
+          break;
+        }
+      }
+
+      // stores the computed value and returns it in one line
+      return isPrime.answers[value] = prime;
+
+    }
+
+    assert(isPrime(5), "5 is prime!");
+
+    assert(isPrime.answers[5], "The answer was cached!");
+
+  </script>
+</body>
+
+</html>

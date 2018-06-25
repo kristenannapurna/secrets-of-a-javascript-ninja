@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Simple Callback Example (3.1)</title>
+</head>
+
+<body>
+
+  <script>
+    // sets up our testing function 
+    function assert(condition, message) {
+      condition ? console.log(message) : console.log('Assertion failed');
+    }
+
+    // sets a global variable to text
+    var text = "Domo arigato!";
+
+    console.log("before defining functions");
+
+    function useless(ninjaCallback) {
+      console.log("in useless function");
+      return ninjaCallback();
+    }
+
+    function getText() {
+      console.log("in getText function");
+      return text;
+    }
+
+    console.log("before making all the calls");
+
+    assert(useless(getText) === text, `The useless function works! ${text}`);
+
+    console.log("After the calls have been made");
+
+
+  </script>
+
+</body>
+
+</html>

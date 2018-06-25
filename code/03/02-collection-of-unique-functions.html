@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+
+<body>
+
+  <script>
+
+    var store = {
+      // keeps track of next available ID to be assigned
+      nextId: 1,
+      // creates an object to serve as a cache in which we'll store functions
+      cache: {},
+      // adds functions to the cache but only if they are unique
+      add: function (fn) {
+        // look for the existance of an id property. if there is one, it can be assumed that the function has already been processed and we can ignore it. 
+        if (!fn.id) {
+          // using the increment operator after the value returns the value BEFORE incrementing it (as opposed to ++nextId).
+          // this assigns an id property to the function and inrements the nextId property in one go. 
+          fn.id = this.nextId++;
+          // this adds the function to the cache, using the id value as the property name. 
+          this.cache[fn.id] = fn;
+          // if a function was added to the cache, it will return true! 
+          return true;
+        }
+      }
+    }
+
+  </script>
+</body>
+
+</html>
