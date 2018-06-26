@@ -185,3 +185,270 @@ Memoization is helpful performance wise particularly when:
 - time consuming math
 
 In `code/03/03-memoizing-previously-computed-values.html` we will look at an example for computing prime numbers.
+
+### 3.3 Defining Functions
+
+A few ways to define functions in JavaScript:
+
+- **Function declarations** and **Function expressions** - the two most common but subtly different ways of defining functions.
+
+```javascript
+// function definition
+function myFun() {
+  return 1;
+}
+```
+
+- **Arrow functions** New to ES6, (often called _lambda functions_) - reduce syntactic clutter and solve common callback problems (more on this later):
+
+```javascript
+// arrow function
+myArg => myArg * 2;
+```
+
+- **Function constructors** - a less often used way of defining functions that enables us to dynamically construct a new function from a string that can also be dynamically generated. The following example creates a function with two parameters, `a` and `b` that returns the sum of those two parameters.
+
+```javascript
+//function constructor
+
+new Function("a", "b", "return a + b");
+```
+
+- **Generator Functions** - Also new to ES6, allows us to create functions that can be exited and reentered later in the application execution while keeping the values of their variables. They can be defined using function declarations, function expressions, and function contructors.
+
+```javascript
+// generator function
+
+function* myGen() {
+  yield 1;
+}
+```
+
+We'll take a look at declarations, expressions, and arrow functions now. Generator functions will be revisited in chapter 6. Function constructors are considered a corner feature of JavaScript that will be skipped.
+
+#### 3.3.1 Function Declarations and function expressions
+
+These are the two most common ways of defining functions in JavaScript. They are very similar but subtle differences do exist.
+
+**Function Declarations**
+
+The most basic way of defining a function. Every function declaration starts with a mandatory `function` keyword, followed by a mandatory function name and a list of optional comma separated paramater names enclosed within a mandatory parentheses.
+
+The function body is enclosed within an opening and closing brace. `{}`
+
+A function declaration must be placed on it's own as a separate JavaScript statement, but can be contained within another function or bock of code.
+
+```javascript
+// function declaration
+
+function myFunctionName(optionalArg, optionalArg2) {
+  //optional statements
+  myStatement1;
+  myStatement2;
+}
+]
+```
+
+**Function Expressions**
+
+Functions that appear as the right side of an assignment expression are called function expressions. They are great because they allow us to define functions exactly where we need them and make our code easier to understand.
+
+```javascript
+// function expression
+
+var myFunc = function() {};
+```
+
+For function declarations, the function name is _mandatory_, whereas for function expressions it is totally _optional_.
+
+For function expressions, like the one above, we can use the variable name to envoke the expression. `myFunc()`
+
+Or, if it is an argument to another function we can envoke it using the parameter name:
+
+```javascript
+function doSomething(action) {
+  action();
+}
+```
+
+**Immediate Functions**
+
+Function expressions can be placed in positions where we would normally expect a function identifier.
+
+```javascript
+// Immediate call to a function expression
+
+(function() {})(3);
+```
+
+All you need is an expression that evaluates to a function followed by a pair of function call parentheses. This is called an _Immediately invoked function expression (IFFE)_.
+
+> Why did we need the parentheses around the function itself? The JavaScript parser needs to be able to easily differentiate between function declarations and function expressions. Without the parentheses, when it hits the function keyword it will think it is dealing with a function declaration and throw an error since no name is given. Inside of a set of parentheses, it signals to the parser that we are evaluating an expression and not a statement.
+
+#### 3.3.2 Arrow Functions
+
+One of the main benefits to Arrow functions is syntactic sugar: they allow us to create functions in a shorter more succinct way.
+
+```javascript
+// regular functions
+
+var values = [3, 4, 6, 1, 6, 7, 2];
+
+values.sort(function(value1, value2) {
+  return value1 - value2;
+});
+
+// arrow functions
+
+values.sort((value1, value2) => value1 - value2);
+```
+
+Some rules to arrow function syntax:
+
+- arrow function definition starts with an optional comma separated list of paramater names
+- If there is only one paramater, parentheses are optional
+- the fat-arrow operator is mandatory, which tells the JS engine we are dealing with an arrow function
+- if it is a simple function, an expression can go on the other side and will be implicitly returned
+- if the body is a block of code, you need to sue the return value as normal
+
+### 3.4 Arguments and Function parameters
+
+The terms _argument_ and _parameter_ are often confused or used interchangably when discussing functions. Formally they are defined as such:
+
+- _Parameters_ are variables that we list as part of a function definition
+- _Arguments_ are values that we pass to the function when we invoke it.
+
+All types of functions can have paramaters. Arguments on the other hand are linked with the invocation of the function - they are values passed to a function at the time of invocation.
+
+When arguments are provided to a function, they are assigned to parameters in the order specified.
+
+If we have a different number of arguments than parameters, no error is raised. The excess arguments aren't assgined to paramater names. (You still have a way to access them, we'll talk about this later).
+
+If we have more parameters than arguments, the paramaters will be set to `undefined`.
+
+There are two newer ES6 features that we can use to deal with parameters: _Rest_ and _default paramaters_.
+
+#### 3.4.1 Rest Paramaters
+
+In the following example we have a function that multiplies the first argument with the largest of the remaining arguments.
+
+```javascript
+function multiMax(first, ...remainingNumbers) {
+  var sorted = remainingNumbers.sort(function(a, b) {
+    return b - a;
+  });
+
+  return first * sorted[0];
+}
+
+multiMax(3, 1, 2, 3); // >> 9
+```
+
+By prefixing the last-named argument of a function with an ellipsis (...) it turns it into an array called _the rest paramaters_ which contains the remaining passed-in arguments.
+
+In the above function, the first argument is assigned to first, and all remaining arguments are placed in a new array called remainingNumbers.
+
+> Note: only the last function paramater can be a rest paramater.
+
+#### 3.4.2 Default paramaters
+
+A lot of the time, especially when building dynamic UI components, we'll want to provide our users with some defualt options. You can use a default paramater when _almost_ all function calls use the same value for a particular paramater, but not all.
+
+```javascript
+function performAction(ninja, action = "skulking") {
+  return `${ninja} ${action}`;
+}
+
+performAction("Adam");
+// >> 'Adam skulking'
+
+performAction("Zoe", "sneaking");
+// >> 'Zoe sneaking'
+```
+
+### 3.5 Summary
+
+- JavaScript is a functional language.
+- Functions are first class objects.
+- Callback functions are functions that other code will "call back" later.
+- We can take advantage of the fact that functions can have properties and use them to store additional functions as properties or create a cache (memoization).
+- There are different types of functions (declaration, expression, arrow, generator)
+- Arrow functions allow us to write functions in a more succinct way.
+- A paramater is a variable that we list as a part of a function definition.
+- An argument is a value that we pass to the function when we invoke it.
+- A functions paramater list and argument list can be different lengths.
+- Rest paramaters and default paramaters can be used to work with paramaters of varied lengths, and to set defaults.
+
+### 3.6 Exercises
+
+Refer to `code/03/04-exercises.js` for my answers!
+
+1.  In the following code snippet, which functions are callback functions?
+
+```javascript
+numbers.sort(function sortAsc(a, b) {
+  return a - b;
+});
+
+function ninja() {}
+ninja();
+
+var myButton = document.getElementById("myButton");
+myButton.addEventListener("click", function handleClick() {
+  alert("clicked");
+});
+```
+
+2.  In the following snippet, categorize functions according to their type (function declaration, function expression or arrow function)
+
+```javascript
+numbers.sort(function sortAsc(a, b) {
+  return a - b;
+});
+
+numbers.sort((a, b) => b - a);
+
+(function() {})();
+
+function outer() {
+  function inner() {}
+  return inner;
+}
+
+(function() {})();
+
+(() => "Yoshi")();
+```
+
+3.  After executing the following code snippet, what are the values of variables `samurai` and `ninja`?
+
+```javascript
+var samurai = (() => "Tomoe")();
+
+var ninja = (() => {
+  "Yoshi";
+})();
+```
+
+4.  Within the body of the `test` function, what are the values of paramaters `a`, `b`, and `c` for the two function calls?
+
+```javascript
+function test(a, b, ...c) {
+  /* a, b, c*/
+}
+
+test(1, 2, 3, 4, 5);
+
+test();
+```
+
+5.  After executing the following code snippet, what are the values of the `message1` and `message2` variables?
+
+```javascript
+function getNinjaWieldingWeapon(ninja, weapon = "katana") {
+  return ninja + " " + katana;
+}
+
+var message1 = getNinjaWieldingWeapon("Yoshi");
+var message2 = getNinjaWieldingWeapon("Yoshi", "wakizashi");
+```
