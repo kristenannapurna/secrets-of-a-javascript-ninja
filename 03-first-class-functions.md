@@ -96,7 +96,7 @@ So - whatever we can do with objects, we can do with functions. Functions _are_ 
 
 Whenver a funciton is set up to be called at a later time, whether by the browser in the event-handling phase or by other code, we are setting up a _callback_.
 
-Let's look at a simple callback example in `code/03/01-simple-callback-example.html`.
+Let's look at a simple callback example in <a href="code/03/01-simple-callback-example.html">`code/03/01-simple-callback-example.html`</a>.
 
 Important takeaways:
 
@@ -170,7 +170,7 @@ _The Challenge:_ how do we determine which functions are already in the collecti
 
 _A Naive Solution:_ store all the functions in an array and loop through, checking for duplicates (poor performance)
 
-_A Ninja Solution:_ use function properties `code/03/02-collection-of-unique-functions.js`
+_A Ninja Solution:_ use function properties <a href="code/03/02-collection-of-unique-functions.html">`code/03/02-collection-of-unique-functions.js`</a>
 
 #### 3.2.2 Self-memoizing functions
 
@@ -184,7 +184,7 @@ Memoization is helpful performance wise particularly when:
 - searching data that doesn't change often
 - time consuming math
 
-In `code/03/03-memoizing-previously-computed-values.html` we will look at an example for computing prime numbers.
+In <a href="code/03/03-memoizing-previously-computed-values.html">`code/03/03-memoizing-previously-computed-values.html`</a> we will look at an example for computing prime numbers.
 
 ### 3.3 Defining Functions
 
@@ -381,7 +381,7 @@ performAction("Zoe", "sneaking");
 
 ### 3.6 Exercises
 
-Refer to `code/03/04-exercises.js` for my answers!
+Refer to <a href="code/03/04-exercises.js">`code/03/04-exercises.js`</a> for my answers!
 
 1.  In the following code snippet, which functions are callback functions?
 
