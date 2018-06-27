@@ -452,3 +452,8 @@ function getNinjaWieldingWeapon(ninja, weapon = "katana") {
 var message1 = getNinjaWieldingWeapon("Yoshi");
 var message2 = getNinjaWieldingWeapon("Yoshi", "wakizashi");
 ```
+
+### Further Reading
+
+<a href="http://ryanchristiani.com/functions-as-first-class-citizens-in-javascript/">Functions as First Class Citizens in JavaScript</a>
+<a href="https://notes.hackeryou.com/lesson/59237d393de2047c06531b20/5ac38e019f86d2f20b0e6474">How do callbacks work</a>
