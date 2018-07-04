@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>forEach</title>
+</head>
+
+<body>
+
+  <script>
+
+    // this will iterate, but the context of this is not bound to each list item 
+    function forEach(list, callback) {
+      for (var n = 0; n < list.length; n++) {
+        callback(n);
+      }
+    }
+
+
+    // function forEach(list, callback) {
+    //   for (var n = 0; n < list.length; n++) {
+    //     callback.call(list[n], n)
+    //   }
+    // }
+
+
+    var weapons = [
+      { type: 'shuriken' },
+      { type: 'katana' },
+      { type: 'nunchucks' }
+    ];
+
+    forEach(weapons, function (item) {
+      this.sentence = `got the expected value of ${weapons[item].type}`
+    });
+
+
+  </script>
+
+</body>
+
+</html>

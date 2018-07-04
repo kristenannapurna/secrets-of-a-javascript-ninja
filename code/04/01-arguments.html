@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Arguments</title>
+</head>
+
+<body>
+
+  <script>
+
+    function assert(condition, message) {
+      condition ? console.log(message) : console.log('The assertion failed');
+    }
+
+
+    // declares a function with 3 paramaters
+    function whatever(a, b, c) {
+
+      assert(a === 1, 'The value of a is 1');
+      assert(b === 2, 'The value of b is 2');
+      assert(c === 3, 'The value of c is 3');
+
+      assert(arguments.length === 5, 'We have passed in 5 paramaters');
+
+      assert(arguments[0] === a, 'The first argument is assigned to a');
+      assert(arguments[1] === b, 'The first argument is assigned to b');
+      assert(arguments[2] === c, 'The first argument is assigned to c');
+
+
+      assert(arguments[3] === 4, 'We can access the fourth argument');
+      assert(arguments[4] === 5, 'We can access the fifth argument');
+
+    }
+
+    // calls the function with 5 arguments
+    whatever(1, 2, 3, 4, 5);
+
+
+  </script>
+
+</body>
+
+</html>

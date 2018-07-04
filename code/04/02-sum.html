@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Sum</title>
+</head>
+
+<body>
+
+  <script>
+    // with the ARGUMENT paramater
+    function sum() {
+      var sum = 0;
+
+      for (var i = 0; i < arguments.length; i++) {
+        sum += arguments[i];
+      }
+
+      return sum;
+    }
+
+    console.log(sum(2, 3, 4, 5, 3));
+    console.log(sum(2, 4, 234, 6, 3, 6, 2, 4, 2));
+
+
+
+    // with REST paramaters
+
+    function sumThingElse(...args) {
+      return args.reduce((a, b) => a + b, 0);
+
+    }
+
+    console.log(sumThingElse(2, 3, 4, 5, 3))
+    console.log(sumThingElse(2, 4, 234, 6, 3, 6, 2, 4, 2))
+
+  </script>
+
+</body>
+
+</html>

@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Function Context</title>
+</head>
+
+<body>
+
+  <script>
+
+    // returns a function context that will allow us to examine the context from outside
+
+    function whatsMyContext() {
+      return this;
+    }
+
+    var getMyThis = whatsMyContext;
+    console.log(getMyThis());
+
+    var ninja1 = {
+      name: 'Ryan',
+      getMyThis: whatsMyContext,
+    }
+
+    var ninja2 = {
+      name: 'Tiff',
+      getMyThis: whatsMyContext,
+    }
+
+    console.log(ninja1.getMyThis());
+    console.log(ninja2.getMyThis());
+
+
+  </script>
+</body>
+
+</html>

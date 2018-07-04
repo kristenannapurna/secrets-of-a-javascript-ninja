@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Apply / Call</title>
+</head>
+
+<body>
+
+  <script>
+
+    // the function takes the arguments, adds them together, and puts the result onto whatever object is the function context
+    function juggle() {
+      var result = 0;
+
+      for (var n = 0; n < arguments.length; n++) {
+        result += arguments[n];
+      }
+
+      this.result = result;
+    }
+
+    // these objects are initially empty 
+    var ninja1 = {};
+    var ninja2 = {};
+
+    // this uses apply which takes an array of arguments
+    juggle.apply(ninja1, [1, 2, 3, 4]);
+
+    // this uses call which takes a list of arguments
+    juggle.call(ninja2, 5, 6, 7, 8);
+
+    console.log(ninja1, ninja2);
+  </script>
+
+</body>
+
+</html>

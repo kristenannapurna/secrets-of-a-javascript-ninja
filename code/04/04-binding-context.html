@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Binding Context</title>
+</head>
+
+<body>
+
+  <button id="test">Click me!</button>
+
+  <script>
+
+    function assert(condition, message) {
+      condition ? console.log(message) : `assertion failed`
+    }
+
+    // constructor function that creates objects that retain state regarding our button. With it we will track whether or not the button has been clicked.
+
+    function Button() {
+      this.clicked = false;
+
+      // we'll use this method as our event handler
+      this.click = function () {
+        this.clicked = true;
+        assert(button.clicked, "The button has been clicked");
+      }
+    }
+
+    // creates an instance that will track whether the button has been clicked
+
+    var button = new Button();
+
+    // establishes the click handler
+
+    var elem = document.getElementById('test');
+    elem.addEventListener("click", button.click);
+  </script>
+
+</body>
+
+</html>
