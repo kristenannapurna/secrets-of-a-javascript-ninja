@@ -16,8 +16,12 @@ Code examples and exercises that correspond with the chapters can be found in th
 <a href="/03-first-class-functions.md">Chapter 3: First Class Functions</a>
 </div>
 <br>
-
+<div>
+<a href="/04-understanding-function-invocation.md">
 Chapter 4: Understanding Function Invocation
+</a>
+</div>
+<br>
 
 Chapter 5: Closures and Scopes
 
