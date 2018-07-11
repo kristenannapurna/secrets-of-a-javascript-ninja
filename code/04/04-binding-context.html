@@ -15,7 +15,7 @@
   <script>
 
     function assert(condition, message) {
-      condition ? console.log(message) : `assertion failed`
+      condition ? console.log(message) : console.llg(`assertion failed`);
     }
 
     // constructor function that creates objects that retain state regarding our button. With it we will track whether or not the button has been clicked.
@@ -38,6 +38,8 @@
 
     var elem = document.getElementById('test');
     elem.addEventListener("click", button.click);
+
+
   </script>
 
 </body>

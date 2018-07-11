@@ -171,16 +171,6 @@ Functions and methods are generally named with a **verb** that describes what th
 
 What if we want to make the function context whatever we want?
 
-There is a common bug related to event handling (when an event handler is called, the function context is set to the object to which the event was bound - more on this in chapter 13).
-
-Let's look at an example in `code/04/04-binding-context.html`
-
-This code doesn't work! It fails because the context of the `click` function _isn't_ referring to the button object as intended.
-
-If we had called the function via `button.click()` the context _would_ have been the button, but because the event handling system of the browser defines the context of invocation to be the target element of the event, it makes the context the `<button>` element, not the `button` object.
-
-#### Using the apply and call methods
-
 JavaScript provides a means for us to invoke a function and explicitly specify any object we want as the function context. There are two methods that exist on every function: `apply` and `call`. (Functions have properties just like any other object type, including methods).
 
 To invoke a function using it's `apply` method, we pass two paramaters: the object to be used as function context, and an array of values to be used as the invocation arguments.
@@ -191,4 +181,162 @@ We can look at an example in `code/04/05-apply-call.html`
 
 A more practical example where we write our own `forEach` function can be found in `code/04/06-call-callbacks.html`;
 
+### 4.3 Fixing the problem of function contexts
 
+There is a common bug related to event handling (when an event handler is called, the function context is set to the object to which the event was bound - more on this in chapter 13).
+
+Let's look at an example in `code/04/04-binding-context.html`
+
+This code doesn't work! It fails because the context of the `click` function _isn't_ referring to the button object as intended.
+
+If we had called the function via `button.click()` the context _would_ have been the button, but because the event handling system of the browser defines the context of invocation to be the target element of the event, it makes the context the `<button>` element, not the `button` object.
+
+#### 4.3.1 Using arrow functions to get around function contexts
+
+Besides syntactic sugar, arrow functions have another feature that makes them great as callback functions: _arrow functions don't have their own `this` value_. Instead, they remember the value of the `this` paramater at the time of their definition.
+
+Let's look at how we can use them to get around the error with the event listener in `code/04/07-using-arrow-functions.html`
+
+In this case, the arrow function was created inside a constructor function, the `this` paramater is the newly constructed object.
+
+Let's take a look at what would happen if we used an object literal in `code/04-07-arrow-functions-and-object-literals.html`
+
+#### 4.3.2 Using the bind method
+
+In addition to `call` and `apply`, every function also has access to the `bind` method that essentially creates a new funciton. The function has an identical body, but it's context is _always_ bound to a certian object, regardless of the way we envoke it. Let's revisit the last problem in `/code/04/09-binding-to-event-handler.html`.
+
+### 4.4 Summary
+
+- When invoking a funciton, in addition to the paramaters explicitly stated in the function definition, function invocations are passed two implicit paramaters: `arguments` and `this`:
+
+  - The `arguments` paramater is a collection (not an array) of arguments passed to the function
+  - it has a `length` property that idnicates how many arguments were passed in
+  - in nonstrict mode, arguments object ailases the function paramaters
+  - the `this` paramater represents the function context, an object to which the function invocation is associated. How `this` is determined can depend on the way a function is defined as well as on how it's invoked.
+
+- A function can be invoked in four ways:
+
+  - As a function `skulk()`
+  - As a method `ninja.skulk()`
+  - As a constructor: `new Ninja()`
+  - Via its `apply` and `call` methods: `skulk.call(ninja) or skulk.apply(ninja)`
+
+- The way a function is invoked influences the value of the `this` paramater:
+
+  - If a function is invoked as a function, the value of the `this` paramater is usually the global `window` object in nonstrict mode, and `undefined` in strict mode
+  - If a function is invoked as a method, the value of the `this` paramater is the object on which the funciton was invoked.
+  - If a funciton is invoked as a constructor, the value of the `this` paramater is the newly constructed object.
+  - If a function is invoked through `call` and `apply`, the value of the `this` paramater is the first argument supplied to `call` and `apply`.
+
+- Arrow functions don't have their own value of the `this` paramater. Instead they pick it up at the moment of their creation.
+
+- Use the `bind` method, available to all functions, to create a new function that's always bound to the argument of the `bind` method. In all other aspects, the bound function behaves as the original function.
+
+### 4.5 Exercises
+
+1.  The following function calculates the sum of the passed-in arguments by using the `arguments` object:
+
+```javascript
+  funciton sum(){
+  var sum = 0;
+  for(var i = 0; i < arguments.length; i++){
+    sum += arguments[i];
+  }
+  return sum;
+}
+```
+
+By using the rest paramaters introduced in the previous chapter, rewrite the `sum` function so that it doesn't use the arguments object.
+
+2.  After running the following code, what are the values of the variables `ninja` and `samurai`?
+
+```javascript
+function getSamurai(samurai) {
+  "use strict";
+
+  arguments[0] = "Ishida";
+
+  return samurai;
+}
+
+function getNinja(ninja) {
+  arguments[0] = "Fuma";
+  return ninja;
+}
+
+var samurai = getSamurai("Toyotomi");
+var ninja = getNinja("Yoshi");
+```
+
+3.  When running the following code, which of the assertions will pass?
+
+```javascript
+function whoAmI1() {
+  "use strict";
+  return this;
+}
+
+function whoAmI2() {
+  return this;
+}
+
+assert(whoAmI1() === window, "Window?");
+assert(whoAmI2() === window, "Window?");
+```
+
+4.  When runing the following code, which of the assertions will pass?
+
+```javascript
+var ninja1 = {
+  whoAmI: function() {
+    return this;
+  }
+};
+
+var ninja2 = {
+  whoAmI: ninja1.whoAmI
+};
+
+var identify = ninja2.whoAmI;
+
+assert(ninja1.whoAmI() === ninja1, "ninja1?");
+assert(ninja2.whoAmI() === ninja1, "ninja1 again?");
+assert(identify() === ninja1, "ninja1 again?");
+assert(ninja1.whoAmI.call(ninja2) === ninja2, "ninja2 here?");
+```
+
+5.  When running the following code which of the assertions will pass?
+
+```javascript
+function Ninja() {
+  this.whoAmI = () => this;
+}
+
+var ninja1 = new Ninja();
+
+var ninja2 = {
+  whoAmI: ninja1.whoAmI
+};
+
+assert(ninja1.whoAmI() === ninja1, "ninja1 here?");
+assert(ninja2.whoAmI() === ninja2, "ninja2 here?");
+```
+
+6.  Which of the following assertions will pass?
+
+```javascript
+function Ninja() {
+  this.whoAmI = function() {
+    return this;
+  }.bind(this);
+}
+
+var ninja1 = new Ninja();
+
+var ninja2 = {
+  whoAmI: ninja1.whoAmI
+};
+
+assert(ninja1.whoAmI() === ninja1, "ninja1 here");
+assert(ninja2.whoAmI() === ninja2, "ninja2 here");
+```
